@@ -62,32 +62,6 @@ module Poker where
                         else tieHigh hand1 hand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2
                 else if score1 < score2 then hand1
                 else hand2
-        
-        --calls each function to find the score of the hand and returns the score
-        getScore values suits = do
-                if (checkRoyalFlush values suits) then 1
-                else if (checkStraightFlush values suits) then 2
-                else if (checkFour values) then 3
-                else if (checkFullHouse values) then 4
-                else if (checkFlush suits) then 5
-                else if (checkStraight values) then 6
-                else if (checkThree values) then 7
-                else if (checkTwoPair values) then 8
-                else if (checkPair values) then 9
-                else 10
-                
-        --returns the value of the card
-        getValue card = do
-                if fromIntegral(card `mod` 13) == 0 then 13
-                else fromIntegral(card `mod` 13)
-
-        --returns the suit of the card
-        getSuit card = do
-                let x = (card `div` 13)
-                if x < 1 || card == 13 then "C"
-                else if x < 2 || card == 26 then "D"
-                else if x < 3 || card == 39 then "H"
-                else "S"
 
         checkRoyalFlush values suits = do
                 if (checkStraightFlush values suits) && (values!!4 == 13) then True
@@ -251,6 +225,33 @@ module Poker where
         getHighestSuitOfHighestKicker amount values hand = getHighestSuitOfHighestKicker' amount 0 values hand 0 0 -- get the highest suit of the highest ranked kicker out of 'amount' kickers in 'hand'
 
         -- helper functions
+        --calls each function to find the score of the hand and returns the score
+        getScore values suits = do
+                if (checkRoyalFlush values suits) then 1
+                else if (checkStraightFlush values suits) then 2
+                else if (checkFour values) then 3
+                else if (checkFullHouse values) then 4
+                else if (checkFlush suits) then 5
+                else if (checkStraight values) then 6
+                else if (checkThree values) then 7
+                else if (checkTwoPair values) then 8
+                else if (checkPair values) then 9
+                else 10
+                
+        --returns the value of the card
+        getValue card = do
+                if fromIntegral(card `mod` 13) == 0 then 13
+                else fromIntegral(card `mod` 13)
+
+        --returns the suit of the card
+        getSuit card = do
+                let x = (card `div` 13)
+                if x < 1 || card == 13 then "C"
+                else if x < 2 || card == 26 then "D"
+                else if x < 3 || card == 39 then "H"
+                else "S"
+
+        -- credit StackOverflow
         count e [] = 0
         count e (a:xs) = (count e xs +) $ if a == e then 1 else 0
 
