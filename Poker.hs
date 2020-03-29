@@ -128,16 +128,19 @@ module Poker where
                 else False
 
         -- tie breakers
+        -- tie break Royal Flush
         tieRoyalFlush hand1 hand2 suits1 suits2 = do
                 if (suits1!!0 > suits2!!0) then hand1
                 else hand2
         
+        -- tie break Straight Flus
         tieStraightFlush hand1 hand2 values1 values2 orighand1 orighand2 = do
                 if maximum values1 > maximum values2 then hand1
                 else if maximum values1 < maximum values2 then hand2
                 else if maximum orighand1 > maximum orighand2 then hand1
                 else hand2
 
+        -- tie break Four Of A Kind
         tieFour hand1 hand2 values1 values2 orighand1 orighand2 = do
                 if getFourOfAKindValue values1 > getFourOfAKindValue values2 then hand1
                 else if getFourOfAKindValue values1 < getFourOfAKindValue values2 then hand2
@@ -146,6 +149,7 @@ module Poker where
                 else if getHighestSuitOfCardRepeating 1 values1 orighand1 > getHighestSuitOfCardRepeating 1 values2 orighand2 then hand1
                 else hand2
 
+        -- tie break Full House
         tieFullHouse hand1 hand2 values1 values2 orighand1 orighand2 = do
                 if getThreeOfAKindValue values1 > getThreeOfAKindValue values2 then hand1
                 else if getThreeOfAKindValue values1 < getThreeOfAKindValue values2 then hand2
@@ -154,6 +158,7 @@ module Poker where
                 else if getHighestSuitOfCardRepeating 2 values1 orighand1 > getHighestSuitOfCardRepeating 2 values2 orighand2 then hand1
                 else hand2
 
+        -- tie break Flush
         tieFlush hand1 hand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2 = do
                 if sortedvalues1!!4 > sortedvalues2!!4 then hand1
                 else if sortedvalues1!!4 < sortedvalues2!!4 then hand2
@@ -168,12 +173,14 @@ module Poker where
                 else if sortedorig1!!4 > sortedorig2!!4 then hand1
                 else hand2
         
+        -- tie break Straight
         tieStraight hand1 hand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2 = do
                 if sortedvalues1!!4 > sortedvalues2!!4 then hand1
                 else if sortedvalues1!!4 < sortedvalues2!!4 then hand2
                 else if sortedorig1!!4 > sortedorig2!!4 then hand1
                 else hand2
 
+        -- tie break Three Of A Kind
         tieThree hand1 hand2 values1 values2 orighand1 orighand2 = do
                 if getThreeOfAKindValue values1 > getThreeOfAKindValue values2 then hand1
                 else if getThreeOfAKindValue values1 < getThreeOfAKindValue values2 then hand2
@@ -189,6 +196,7 @@ module Poker where
                         else if getHighestSuitOfHighestKicker 2 values1 orighand1 > getHighestSuitOfHighestKicker 2 values2 orighand2 then hand1
                         else hand2
 
+        -- tie break Two Pairs
         tieTwoPair hand1 hand2 values1 values2 orighand1 orighand2 = do
                 if getTwoOfAKindValue values1 > getTwoOfAKindValue values2 then hand1
                 else if getTwoOfAKindValue values1 < getTwoOfAKindValue values2 then hand2
@@ -203,6 +211,7 @@ module Poker where
                 else if getHighestSuitOfCardRepeating 1 values1 orighand1 > getHighestSuitOfCardRepeating 1 values2 orighand2 then hand1
                 else hand2
 
+        -- tie break One Pair
         tiePair hand1 hand2 values1 values2 orighand1 orighand2 = do
                 if getTwoOfAKindValue values1 > getTwoOfAKindValue values2 then hand1
                 else if getTwoOfAKindValue values1 < getTwoOfAKindValue values2 then hand2
@@ -218,6 +227,7 @@ module Poker where
                         else if getHighestSuitOfCardRepeating 2 values1 orighand1 > getHighestSuitOfCardRepeating 2 values2 orighand2 then hand1
                         else hand2
 
+        -- tie break High Card
         tieHigh hand1 hand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2 = do
                 if sortedvalues1!!4 > sortedvalues2!!4 then hand1
                 else if sortedvalues1!!4 < sortedvalues2!!4 then hand2
