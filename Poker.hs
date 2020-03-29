@@ -39,7 +39,18 @@ module Poker where
                 let score1 = getScore sortedvalues1 suits1
                 let score2 = getScore sortedvalues2 suits2
 
-                --returns both scores gonna change this function to output winning hand after tiebreaking done
+                -- gets the winning hand and checks tiebreaks, then returns the winning hand as a list of strings
+                let winningHand = tieBreak score1 score2 hand1 hand2 sortedsuits1 sortedsuits2 values1 values2 orighand1 orighand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2
+                let retHand = sort (map tupToStr winningHand)
+                retHand
+                
+        --change tuple to string
+        tupToStr tup = do
+                let str = show (fst tup) ++ (snd tup)
+                str
+
+        --tiebreak function returns winning hand
+        tieBreak score1 score2 hand1 hand2 sortedsuits1 sortedsuits2 values1 values2 orighand1 orighand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2 = do 
                 if score1 == score2 then
                         if score1 == 1 then
                                 tieRoyalFlush hand1 hand2 sortedsuits1 sortedsuits2
@@ -63,46 +74,55 @@ module Poker where
                 else if score1 < score2 then hand1
                 else hand2
 
+        --function to check if hand is a royal flush
         checkRoyalFlush values suits = do
                 if (checkStraightFlush values suits) && (values!!4 == 13) then True
                 else False
 
+        --function to check if hand is a straight flush
         checkStraightFlush values suits = do
                 if ((checkFlush suits) && (checkStraight values)) then True
                 else False
 
+        --function to check if hand is a four of a kind
         checkFour hand = do
                 if ((hand!!0 == hand!!1) && (hand!!1 == hand!!2) && (hand!!2 == hand!!3)) then True
                 else if ((hand!!1 == hand!!2) && (hand!!2 == hand!!3) && (hand!!3 == hand!!4)) then True
                 else False
         
+        --function to check if hand is a full house
         checkFullHouse hand = do
                 if ((hand!!0 == hand!!1) && (hand!!1 == hand!!2) && (hand!!3 == hand!!4)) then True
                 else if ((hand!!0 == hand!!1) && (hand!!2 == hand!!3) && (hand!!3 == hand!!4)) then True
                 else False
 
+        --function to check if hand is a flush
         checkFlush hand = do
                 if ((all (=="C") hand) || (all (=="D") hand) || (all (=="H") hand) || (all (=="S") hand)) then True
                 else False
 
+        --function to check if hand is a straight
         checkStraight hand = do
                 if ((hand!!0 == 1) && (hand!!1 == 10) && (hand!!2 == 11) && (hand!!3 == 12) && (hand!!4 == 13)) then True
                 else if ((hand!!0+1==hand!!1) && (hand!!1+1==hand!!2) && (hand!!2+1==hand!!3) && (hand!!3+1==hand!!4))
                         then True
                 else False
         
+        --function to check if hand is a three of a kind
         checkThree hand = do
                 if ((hand!!0 == hand!!1) && (hand!!1 == hand!!2)) then True
                 else if ((hand!!1 == hand!!2) && (hand!!2 == hand!!3)) then True
                 else if ((hand!!2 == hand!!3) && (hand!!3 == hand!!4)) then True
                 else False
 
+        --function to check if hand is a two pair
         checkTwoPair hand = do
                 if ((hand!!0 == hand!!1) && (hand!!2 == hand!!3)) then True
                 else if ((hand!!0 == hand!!1) && (hand!!3 == hand!!4)) then True
                 else if ((hand!!1 == hand!!2) && (hand!!3 == hand!!4)) then True
                 else False
 
+        --function to check if hand is a pair
         checkPair hand = do
                 if (hand!!0 == hand!!1) || (hand!!1 == hand!!2) || (hand!!2 == hand!!3) || (hand!!3 == hand!!4) then True
                 else False
