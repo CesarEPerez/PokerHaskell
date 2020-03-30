@@ -1,3 +1,7 @@
+-- Submission By:
+-- Cesar Perez 500882780
+-- Kirill Shmakov 500890293
+
 module Poker where
 
         import Data.List 
@@ -43,6 +47,7 @@ module Poker where
                 let winningHand = tieBreak score1 score2 hand1 hand2 sortedsuits1 sortedsuits2 values1 values2 orighand1 orighand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2
                 let retHand = sort (map tupToStr winningHand)
                 retHand
+                --(score1,score2)
                 
         --change tuple to string
         tupToStr tup = do
