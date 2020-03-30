@@ -133,7 +133,7 @@ module Poker where
                 if (suits1!!0 > suits2!!0) then hand1
                 else hand2
         
-        -- tie break Straight Flus
+        -- tie break Straight Flush
         tieStraightFlush hand1 hand2 values1 values2 orighand1 orighand2 = do
                 if maximum values1 > maximum values2 then hand1
                 else if maximum values1 < maximum values2 then hand2
@@ -160,7 +160,9 @@ module Poker where
 
         -- tie break Flush
         tieFlush hand1 hand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2 = do
-                if sortedvalues1!!4 > sortedvalues2!!4 then hand1
+                if sortedvalues1!!0 == 1 && sortedvalues2!!0 /= 1 then hand1
+                else if sortedvalues1!!0 /= 1 && sortedvalues2!!0 == 1 then hand2
+                else if sortedvalues1!!4 > sortedvalues2!!4 then hand1
                 else if sortedvalues1!!4 < sortedvalues2!!4 then hand2
                 else if sortedvalues1!!3 > sortedvalues2!!3 then hand1
                 else if sortedvalues1!!3 < sortedvalues2!!3 then hand2
@@ -175,7 +177,9 @@ module Poker where
         
         -- tie break Straight
         tieStraight hand1 hand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2 = do
-                if sortedvalues1!!4 > sortedvalues2!!4 then hand1
+                if sortedvalues1!!0 == 1 && sortedvalues2!!0 /= 1 && sortedvalues1!!1 /= 2 then hand1
+                else if sortedvalues1!!0 /= 1 && sortedvalues2!!0 == 1 &&  sortedvalues2!!1 /= 2 then hand2
+                else if sortedvalues1!!4 > sortedvalues2!!4 then hand1
                 else if sortedvalues1!!4 < sortedvalues2!!4 then hand2
                 else if sortedorig1!!4 > sortedorig2!!4 then hand1
                 else hand2
@@ -229,7 +233,9 @@ module Poker where
 
         -- tie break High Card
         tieHigh hand1 hand2 sortedvalues1 sortedvalues2 sortedorig1 sortedorig2 = do
-                if sortedvalues1!!4 > sortedvalues2!!4 then hand1
+                if sortedvalues1!!0 == 1 && sortedvalues2!!0 /= 1 then hand1
+                else if sortedvalues1!!0 /= 1 && sortedvalues2!!0 == 1 then hand2
+                else if sortedvalues1!!4 > sortedvalues2!!4 then hand1
                 else if sortedvalues1!!4 < sortedvalues2!!4 then hand2
                 else if sortedvalues1!!3 > sortedvalues2!!3 then hand1
                 else if sortedvalues1!!3 < sortedvalues2!!3 then hand2
